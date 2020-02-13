@@ -260,7 +260,15 @@ export default class ToolbarView extends View {
 	 * @param {module:ui/componentfactory~ComponentFactory} factory A factory producing toolbar items.
 	 */
 	fillFromConfig( config, factory ) {
+		this._behavior.disabled = true;
+		const itemsCount = config.length;
+		let curItem = 0;
 		config.map( name => {
+			curItem++;
+			if ( curItem === itemsCount ) {
+				this._behavior.disabled = false;
+			}
+
 			if ( name == '|' ) {
 				this.items.add( new ToolbarSeparatorView() );
 			} else if ( factory.has( name ) ) {
@@ -594,6 +602,9 @@ class DynamicGrouping {
 	 * @protected
 	 */
 	_updateGrouping() {
+		if ( this.disabled ) {
+			return;
+		}
 		// Do no grouping–related geometry analysis when the toolbar is detached from visible DOM,
 		// for instance before #render(), or after render but without a parent or a parent detached
 		// from DOM. DOMRects won't work anyway and there will be tons of warning in the console and
