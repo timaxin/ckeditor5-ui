@@ -264,7 +264,7 @@ export default class ToolbarView extends View {
 		const itemsCount = config.length;
 
 		config.map( ( name, itemIndex ) => {
-			if ( itemIndex === itemsCount ) {
+			if ( itemIndex === itemsCount - 1 ) {
 				this._behavior.disabled = false;
 			}
 
