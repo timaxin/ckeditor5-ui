@@ -262,10 +262,9 @@ export default class ToolbarView extends View {
 	fillFromConfig( config, factory ) {
 		this._behavior.disabled = true;
 		const itemsCount = config.length;
-		let curItem = 0;
-		config.map( name => {
-			curItem++;
-			if ( curItem === itemsCount ) {
+
+		config.map( ( name, itemIndex ) => {
+			if ( itemIndex === itemsCount ) {
 				this._behavior.disabled = false;
 			}
 
