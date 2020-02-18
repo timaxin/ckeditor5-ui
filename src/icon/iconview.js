@@ -13,6 +13,21 @@ import View from '../view';
 
 import '../../theme/components/icon/icon.css';
 
+const domCachedParser = {
+	_cache: new Map(),
+	domParser: new DOMParser(),
+	parse: ( markup, type ) => {
+		// Can't use this, because eslint will cry.
+		const cache = domCachedParser._cache;
+
+		if ( !cache.has( markup ) ) {
+			cache.set( markup, this.domParser.parseFromString( markup.trim(), type ) );
+		}
+
+		return cache.get( markup ).cloneNode( true );
+	}
+};
+
 /**
  * The icon view class.
  *
@@ -95,7 +110,7 @@ export default class IconView extends View {
 	 */
 	_updateXMLContent() {
 		if ( this.content ) {
-			const parsed = new DOMParser().parseFromString( this.content.trim(), 'image/svg+xml' );
+			const parsed = domCachedParser.parse( this.content, 'image/svg+xml' );
 			const svg = parsed.querySelector( 'svg' );
 			const viewBox = svg.getAttribute( 'viewBox' );
 
