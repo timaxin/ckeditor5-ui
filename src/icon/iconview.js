@@ -21,7 +21,7 @@ const domCachedParser = {
 		const cache = domCachedParser._cache;
 
 		if ( !cache.has( markup ) ) {
-			cache.set( markup, this.domParser.parseFromString( markup.trim(), type ) );
+			cache.set( markup, domCachedParser.domParser.parseFromString( markup.trim(), type ) );
 		}
 
 		return cache.get( markup ).cloneNode( true );
