@@ -286,7 +286,7 @@ export default class BlockToolbar extends Plugin {
 		const modelTarget = Array.from( model.document.selection.getSelectedBlocks() )[ 0 ];
 
 		// Hides the button when there is no enabled item in toolbar for the current block element.
-		if ( !modelTarget || Array.from( this.toolbarView.items ).every( item => !item.isEnabled ) ) {
+		if ( !modelTarget || ['image', 'media'].includes(modelTarget.name) || Array.from( this.toolbarView.items ).every( item => !item.isEnabled ) ) {
 			this._hideButton();
 
 			return;
